@@ -104,7 +104,7 @@ NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    serializedVersion: 2
+    serializedVersion: 3
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
@@ -117,7 +117,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    accuratePlacement: 0
+    buildHeightMesh: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7482667652216324306, guid: af1a0da324ed10c47b60c8e9945a55ef, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 436675ae61332f540aa115b684f7ba5b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1458,6 +1458,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -2637,12 +2638,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TotalDuration: 2.2599998
   AnimationSequence:
-  - AtTime: At 0s [Wait 0.01s]
+  - AtTime: At 0s [Wait 0,01s]
     StartTime: 0
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 133
+    PropertyRectY: 130
     SequenceType: 1
     EaseType: 1
     EasePower: 3
@@ -2710,12 +2711,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 0.01s [SetActiveAllInput to False]
+  - AtTime: At 0,01s [SetActiveAllInput to False]
     StartTime: 0.01
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 155
+    PropertyRectY: 152
     SequenceType: 2
     EaseType: 1
     EasePower: 3
@@ -2783,12 +2784,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 0.01s [Wait 0.5s]
+  - AtTime: At 0,01s [Wait 0,5s]
     StartTime: 0.01
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 177
+    PropertyRectY: 174
     SequenceType: 1
     EaseType: 0
     EasePower: 0
@@ -2856,12 +2857,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 0.51s [White] [Image]
+  - AtTime: At 0,51s [White] [Image]
     StartTime: 0.51
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 199
+    PropertyRectY: 196
     SequenceType: 0
     EaseType: 0
     EasePower: 0
@@ -2929,12 +2930,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 0.51s [Wait 1s]
+  - AtTime: At 0,51s [Wait 1s]
     StartTime: 0.51
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 221
+    PropertyRectY: 218
     SequenceType: 1
     EaseType: 1
     EasePower: 0
@@ -3002,12 +3003,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.51s [Box] [RectTransform]
+  - AtTime: At 1,51s [Box] [RectTransform]
     StartTime: 1.51
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 243
+    PropertyRectY: 240
     SequenceType: 0
     EaseType: 1
     EasePower: 3
@@ -3075,12 +3076,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.51s [1] [SFX]
+  - AtTime: At 1,51s [1] [SFX]
     StartTime: 1.51
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 265
+    PropertyRectY: 262
     SequenceType: 4
     EaseType: 1
     EasePower: 3
@@ -3148,12 +3149,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.51s [Wait 0.05s]
+  - AtTime: At 1,51s [Wait 0,05s]
     StartTime: 1.51
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 287
+    PropertyRectY: 284
     SequenceType: 1
     EaseType: 1
     EasePower: 3
@@ -3221,12 +3222,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.56s [Box (1)] [RectTransform]
+  - AtTime: At 1,56s [Box (1)] [RectTransform]
     StartTime: 1.56
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 309
+    PropertyRectY: 306
     SequenceType: 0
     EaseType: 1
     EasePower: 3
@@ -3294,12 +3295,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.56s [Wait 0.05s]
+  - AtTime: At 1,56s [Wait 0,05s]
     StartTime: 1.56
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 331
+    PropertyRectY: 328
     SequenceType: 1
     EaseType: 1
     EasePower: 3
@@ -3367,12 +3368,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.61s [1] [SFX]
+  - AtTime: At 1,61s [1] [SFX]
     StartTime: 1.6099999
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 353
+    PropertyRectY: 350
     SequenceType: 4
     EaseType: 1
     EasePower: 3
@@ -3440,12 +3441,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.61s [Box (2)] [RectTransform]
+  - AtTime: At 1,61s [Box (2)] [RectTransform]
     StartTime: 1.6099999
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 375
+    PropertyRectY: 372
     SequenceType: 0
     EaseType: 1
     EasePower: 3
@@ -3513,12 +3514,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.61s [Wait 0.05s]
+  - AtTime: At 1,61s [Wait 0,05s]
     StartTime: 1.6099999
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 397
+    PropertyRectY: 394
     SequenceType: 1
     EaseType: 1
     EasePower: 3
@@ -3586,12 +3587,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.66s [1] [SFX]
+  - AtTime: At 1,66s [1] [SFX]
     StartTime: 1.6599998
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 419
+    PropertyRectY: 416
     SequenceType: 4
     EaseType: 1
     EasePower: 3
@@ -3659,12 +3660,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.66s [Box (3)] [RectTransform]
+  - AtTime: At 1,66s [Box (3)] [RectTransform]
     StartTime: 1.6599998
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 441
+    PropertyRectY: 438
     SequenceType: 0
     EaseType: 1
     EasePower: 3
@@ -3732,12 +3733,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.66s [Wait 0.05s]
+  - AtTime: At 1,66s [Wait 0,05s]
     StartTime: 1.6599998
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 463
+    PropertyRectY: 460
     SequenceType: 1
     EaseType: 1
     EasePower: 3
@@ -3805,12 +3806,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.71s [1] [SFX]
+  - AtTime: At 1,71s [1] [SFX]
     StartTime: 1.7099998
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 485
+    PropertyRectY: 482
     SequenceType: 4
     EaseType: 1
     EasePower: 3
@@ -3878,12 +3879,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.71s [Box (4)] [RectTransform]
+  - AtTime: At 1,71s [Box (4)] [RectTransform]
     StartTime: 1.7099998
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 507
+    PropertyRectY: 504
     SequenceType: 0
     EaseType: 1
     EasePower: 3
@@ -3951,12 +3952,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.71s [Wait 0.05s]
+  - AtTime: At 1,71s [Wait 0,05s]
     StartTime: 1.7099998
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 529
+    PropertyRectY: 526
     SequenceType: 1
     EaseType: 1
     EasePower: 3
@@ -4024,12 +4025,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.76s [1] [SFX]
+  - AtTime: At 1,76s [1] [SFX]
     StartTime: 1.7599998
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 551
+    PropertyRectY: 548
     SequenceType: 4
     EaseType: 1
     EasePower: 3
@@ -4097,12 +4098,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.76s [Next] [RectTransform]
+  - AtTime: At 1,76s [Next] [RectTransform]
     StartTime: 1.7599998
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 573
+    PropertyRectY: 570
     SequenceType: 0
     EaseType: 1
     EasePower: 3
@@ -4170,12 +4171,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.76s [Prev] [RectTransform]
+  - AtTime: At 1,76s [Prev] [RectTransform]
     StartTime: 1.7599998
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 595
+    PropertyRectY: 592
     SequenceType: 0
     EaseType: 1
     EasePower: 3
@@ -4243,12 +4244,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 1.76s [Wait 0.5s]
+  - AtTime: At 1,76s [Wait 0,5s]
     StartTime: 1.7599998
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 617
+    PropertyRectY: 614
     SequenceType: 1
     EaseType: 1
     EasePower: 3
@@ -4316,12 +4317,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 2.26s [SetActiveAllInput to True]
+  - AtTime: At 2,26s [SetActiveAllInput to True]
     StartTime: 2.2599998
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 639
+    PropertyRectY: 636
     SequenceType: 2
     EaseType: 1
     EasePower: 3
@@ -5129,6 +5130,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 10
   m_TargetDisplay: 0
@@ -5193,9 +5195,17 @@ Camera:
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -7474,6 +7484,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 10
   m_TargetDisplay: 0
@@ -7983,24 +7994,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f54930f0f8f7f2478377a55d6c33e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TotalDuration: 0.51
+  TotalDuration: 1
   AnimationSequence:
-  - AtTime: At 0s [Wait 0.01s]
+  - AtTime: At 0s [Wait 0,5s]
     StartTime: 0
     TriggerStart: 0
     TriggerEnd: 0
-    PropertyRectHeight: 20
-    PropertyRectY: 133
+    PropertyRectHeight: 60
+    PropertyRectY: 130
     SequenceType: 1
     EaseType: 1
     EasePower: 3
     TargetType: 1
     TargetComp: {fileID: 908745315}
-    Duration: 0.01
+    Duration: 0.5
     EventDynamic:
       m_PersistentCalls:
         m_Calls: []
-    IsUnfolded: 0
+    IsUnfolded: 1
     IsDone: 0
     Target: {fileID: 0}
     IsActivating: 1
@@ -8058,12 +8069,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 0.01s [SetActiveAllInput to False]
-    StartTime: 0.01
+  - AtTime: At 0,5s [SetActiveAllInput to False]
+    StartTime: 0.5
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 155
+    PropertyRectY: 192
     SequenceType: 2
     EaseType: 1
     EasePower: 3
@@ -8131,12 +8142,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 0.01s [White] [Image]
-    StartTime: 0.01
+  - AtTime: At 0,5s [White] [Image]
+    StartTime: 0.5
     TriggerStart: 0
     TriggerEnd: 0
-    PropertyRectHeight: 20
-    PropertyRectY: 177
+    PropertyRectHeight: 180
+    PropertyRectY: 214
     SequenceType: 0
     EaseType: 1
     EasePower: 3
@@ -8146,7 +8157,7 @@ MonoBehaviour:
     EventDynamic:
       m_PersistentCalls:
         m_Calls: []
-    IsUnfolded: 0
+    IsUnfolded: 1
     IsDone: 0
     Target: {fileID: 0}
     IsActivating: 0
@@ -8204,12 +8215,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 0.01s [Wait 0.5s]
-    StartTime: 0.01
+  - AtTime: At 0,5s [Wait 0,5s]
+    StartTime: 0.5
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 199
+    PropertyRectY: 397
     SequenceType: 1
     EaseType: 0
     EasePower: 0
@@ -8277,12 +8288,12 @@ MonoBehaviour:
     OrthographicSizeStart: 0
     OrthographicSizeEnd: 0
     TestInt: 0
-  - AtTime: At 0.51s [Home] [LoadScene]
-    StartTime: 0.51
+  - AtTime: At 1s [Home] [LoadScene]
+    StartTime: 1
     TriggerStart: 0
     TriggerEnd: 0
     PropertyRectHeight: 20
-    PropertyRectY: 221
+    PropertyRectY: 419
     SequenceType: 5
     EaseType: 1
     EasePower: 3
