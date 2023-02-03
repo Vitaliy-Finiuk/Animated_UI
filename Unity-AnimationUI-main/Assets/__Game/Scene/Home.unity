@@ -919,6 +919,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3956067759799364755, guid: 7d701ca254dc29d42a5d64e026347f50, type: 3}
   m_PrefabInstance: {fileID: 1751491677}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &220405503 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 3956067759799364754, guid: 7d701ca254dc29d42a5d64e026347f50, type: 3}
+  m_PrefabInstance: {fileID: 1751491677}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &220797337
 GameObject:
   m_ObjectHideFlags: 0
@@ -1258,7 +1263,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 220405503}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -9005,7 +9010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraObject: {fileID: 220405500}
-  rotationMargin: 25
+  rotationMargin: 12.5
   runInEditorOnly: 0
 --- !u!1 &1099909594
 GameObject:
@@ -21089,6 +21094,7 @@ GameObject:
   - component: {fileID: 1610808858}
   - component: {fileID: 1610808862}
   - component: {fileID: 1610808863}
+  - component: {fileID: 1610808864}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -21188,6 +21194,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1610808858}
         m_TargetAssemblyTypeName: ButtonUI, Assembly-CSharp
         m_MethodName: EnterTintAnimation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1610808864}
+        m_TargetAssemblyTypeName: MenuSettingsUI, Assembly-CSharp
+        m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21448,6 +21466,18 @@ MonoBehaviour:
   savedColor: {r: 0.29411766, g: 0.31764707, b: 0.40392157, a: 0}
   savedTextUV0: {x: 0, y: 0, z: 0, w: 0}
   savedFill: 1
+--- !u!114 &1610808864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610808856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d99621a720516ff4796d94b4b73ace16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1611584097
 GameObject:
   m_ObjectHideFlags: 0
@@ -21955,11 +21985,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3956067760346466560, guid: 7d701ca254dc29d42a5d64e026347f50, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.142
+      value: 0.036
       objectReference: {fileID: 0}
     - target: {fileID: 3956067760346466560, guid: 7d701ca254dc29d42a5d64e026347f50, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.364
+      value: -2.67
       objectReference: {fileID: 0}
     - target: {fileID: 3956067760346466560, guid: 7d701ca254dc29d42a5d64e026347f50, type: 3}
       propertyPath: m_LocalRotation.w

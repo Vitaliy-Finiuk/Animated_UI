@@ -26,19 +26,14 @@ namespace CurvedUI
         {
             Instance = this;
         }
-        
-        #if UNITY_EDITOR
-        // Update is called once per frame
-        void Update()
+
+        private void Update()
         {
-            if((Application.isEditor || !runInEditorOnly) && !UnityEngine.XR.XRSettings.enabled)
-            {
-                var mouse = CurvedUIInputModule.MousePosition;
+            var mouse = CurvedUIInputModule.MousePosition;
                 CameraObject.localEulerAngles 
                     = new Vector3(mouse.y.Remap(0, Screen.height, rotationMargin, -rotationMargin),
                     mouse.x.Remap(0, Screen.width, -rotationMargin, rotationMargin), 0);
-            }
         }
-        #endif
+
     }
 }
