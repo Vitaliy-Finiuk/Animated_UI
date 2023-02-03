@@ -914,6 +914,11 @@ MonoBehaviour:
   savedColor: {r: 0, g: 0, b: 0, a: 0}
   savedTextUV0: {x: 0, y: 0, z: 0, w: 0}
   savedFill: 0
+--- !u!4 &220405500 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3956067759799364755, guid: 7d701ca254dc29d42a5d64e026347f50, type: 3}
+  m_PrefabInstance: {fileID: 1751491677}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &220797337
 GameObject:
   m_ObjectHideFlags: 0
@@ -8982,6 +8987,26 @@ MonoBehaviour:
   PlayOnStart: 0
   CurrentTime: 0
   IsPlayingInEditMode: 0
+--- !u!1 &1096197335 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3956067760346466562, guid: 7d701ca254dc29d42a5d64e026347f50, type: 3}
+  m_PrefabInstance: {fileID: 1751491677}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1096197338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1096197335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2f593149fee947adb37ef66cd8b7f5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraObject: {fileID: 220405500}
+  rotationMargin: 25
+  runInEditorOnly: 0
 --- !u!1 &1099909594
 GameObject:
   m_ObjectHideFlags: 0
@@ -21976,11 +22001,15 @@ PrefabInstance:
       propertyPath: runInEditorOnly
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3956067760346466563, guid: 7d701ca254dc29d42a5d64e026347f50, type: 3}
     m_RemovedGameObjects:
     - {fileID: 3956067760379560783, guid: 7d701ca254dc29d42a5d64e026347f50, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3956067760346466562, guid: 7d701ca254dc29d42a5d64e026347f50, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1096197338}
   m_SourcePrefab: {fileID: 100100000, guid: 7d701ca254dc29d42a5d64e026347f50, type: 3}
 --- !u!1 &1773912762
 GameObject:
@@ -24071,10 +24100,6 @@ PrefabInstance:
     - target: {fileID: 6175441705418768826, guid: 7304993ca65981446ad4bd1325fdbb7a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6386043164420525560, guid: 7304993ca65981446ad4bd1325fdbb7a, type: 3}
-      propertyPath: _pointerClickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
