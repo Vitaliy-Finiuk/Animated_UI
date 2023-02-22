@@ -10,7 +10,6 @@ public class LoadingManager : MonoBehaviour
 	public bool logTotalLoadTime;
 
 	[Header("References")]
-	public Player player;
 	public LoadScreen loadScreen;
 	public TerrainHeightSettings heightSettings;
 	public TerrainHeightProcessor heightProcessor;
