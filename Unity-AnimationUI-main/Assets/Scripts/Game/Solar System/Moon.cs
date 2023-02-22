@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace SolarSystem
+namespace Game.Solar_System
 {
 	public class Moon : MonoBehaviour
 	{
@@ -15,8 +13,6 @@ namespace SolarSystem
 		public float size;
 		public int resolution;
 
-
-
 		public Renderer moonRenderer;
 
 		Material material;
@@ -24,17 +20,6 @@ namespace SolarSystem
 		public Camera camTest;
 		public float debug_dst;
 		public bool freezeOrbit;
-
-
-
-
-		void Start()
-		{
-
-			///moonMesh = sphere.GetMesh();
-			//GetComponentInChildren<MeshFilter>().mesh = moonMesh;
-			//material = GetComponentInChildren<MeshRenderer>().material;
-		}
 
 		public void UpdateOrbit(float monthT, EarthOrbit earth, bool geocentric)
 		{
@@ -71,21 +56,14 @@ namespace SolarSystem
 				camTest.transform.position = (geocentric) ? Vector3.zero : earth.earthPos;
 				camTest.transform.LookAt(transform);
 			}
-
-
-			//Graphics.DrawMesh(moonMesh, Matrix4x4.TRS(transform.position, transform.GetChild(0).rotation, transform.localScale * scaleMul), moonMat, LayerMask.NameToLayer("ExtraTerrestrial"));
 		}
 
 		public void Setup(CommandBuffer cmd)
 		{
-			//cmd.DrawMesh(mesh, Matrix4x4.TRS(new Vector3(70, 134, -80), Quaternion.identity, Vector3.one * 30), mat);
 			moonRenderer.gameObject.GetComponent<MeshFilter>().mesh = Seb.Meshing.IcoSphere.Generate(resolution).ToMesh();
 			Material mat = moonRenderer.sharedMaterial;
 
 			cmd.DrawRenderer(moonRenderer, mat);
-			//cmd.DrawMesh(moonMesh, Matrix4x4.TRS(Camera.main.transform.position + Camera.main.transform.forward * (10 + scaleMul), transform.GetChild(0).rotation, transform.localScale), moonMat);
 		}
-
 	}
-
 }

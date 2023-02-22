@@ -1,28 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
+using Generation.Terrain.Settings;
 using UnityEngine;
 
-[ExecuteInEditMode]
-public class PlaceholderWorld : MonoBehaviour
+namespace Game.Misc
 {
-
-	public TerrainGeneration.TerrainHeightSettings heightSettings;
-
-
-	void Start()
+	[ExecuteInEditMode]
+	public class PlaceholderWorld : MonoBehaviour
 	{
-		if (Application.isPlaying)
+
+		public TerrainHeightSettings heightSettings;
+
+
+		private void Start()
 		{
-			gameObject.SetActive(false);
+			if (Application.isPlaying) 
+				gameObject.SetActive(false);
 		}
-	}
 
-	void Update()
-	{
-		if (!Application.isPlaying)
+		private void Update()
 		{
-			transform.position = Vector3.zero;
-			transform.localScale = Vector3.one * heightSettings.worldRadius * 2;
+			if (!Application.isPlaying)
+			{
+				transform.position = Vector3.zero;
+				transform.localScale = Vector3.one * heightSettings.worldRadius * 2;
+			}
 		}
 	}
 }

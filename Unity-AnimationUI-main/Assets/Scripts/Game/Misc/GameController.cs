@@ -2,194 +2,181 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum GameState
+namespace Game.Misc
 {
-	InMainMenu,
-	Playing,
-	ViewingMap,
-	Paused,
-	GameOver
-}
-
-public class GameController : MonoBehaviour
-{
-	public event System.Action onGameStarted;
-
-	// Inspector variables
-	[SerializeField] GameState startupState;
-	[SerializeField] bool allowDevModeToggleInBuild;
-
-	[Header("Debug")]
-	[SerializeField] GameState debug_currentState;
-
-	Stack<GameState> stateStack;
-
-	// Internal variables
-	static GameController _instance;
-	bool devModeEnabledInBuild;
-
-
-	void Awake()
+	public enum GameState
 	{
-		stateStack = new Stack<GameState>();
-		stateStack.Push(startupState);
+		InMainMenu,
+		Playing,
+		ViewingMap,
+		Paused,
+		GameOver
 	}
 
-	void Start()
+	public class GameController : MonoBehaviour
 	{
- if (IsState(GameState.Playing))
+		public event System.Action onGameStarted;
+
+		[SerializeField] GameState startupState;
+		[SerializeField] bool allowDevModeToggleInBuild;
+
+		[Header("Debug")]
+		[SerializeField]
+		private GameState _debugCurrentState;
+
+		private Stack<GameState> _stateStack;
+
+		private static GameController instance;
+		private bool _devModeEnabledInBuild;
+
+		private void Awake()
 		{
-			StartGame();
+			_stateStack = new Stack<GameState>();
+			_stateStack.Push(startupState);
 		}
-	}
 
-	void Update()
-	{
-
-		debug_currentState = stateStack.Peek();
-
-	}
-
-	public static void GameOver()
-	{
-		if (!IsState(GameState.GameOver))
+		private void Start()
 		{
-			Time.timeScale = 0;
-			SetState(GameState.GameOver);
+			if (IsState(GameState.Playing)) 
+				StartGame();
 		}
-	}
 
-	public static void SwitchToEndlessMode()
-	{
-		Time.timeScale = 1;
-		ReturnToPreviousState();
-	}
+		private void Update() => 
+			_debugCurrentState = _stateStack.Peek();
 
-	public static void SetPauseState(bool paused)
-	{
-		if (IsAnyState(GameState.Playing, GameState.ViewingMap, GameState.Paused))
+		public static void GameOver()
 		{
-			Time.timeScale = (paused) ? 0 : 1;
-			if (paused)
+			if (!IsState(GameState.GameOver))
 			{
-				SetState(GameState.Paused);
+				Time.timeScale = 0;
+				SetState(GameState.GameOver);
+			}
+		}
+
+		public static void SwitchToEndlessMode()
+		{
+			Time.timeScale = 1;
+			ReturnToPreviousState();
+		}
+
+		public static void SetPauseState(bool paused)
+		{
+			if (IsAnyState(GameState.Playing, GameState.ViewingMap, GameState.Paused))
+			{
+				Time.timeScale = (paused) ? 0 : 1;
+				if (paused)
+					SetState(GameState.Paused);
+				else
+					ReturnToPreviousState();
+			}
+			else
+				Debug.Log($"Cannot set pause state when current game state = {CurrentState}");
+		}
+
+		static void ReturnToPreviousState()
+		{
+			if (Instance._stateStack.Count > 0)
+			{
+				Instance._stateStack.Pop();
 			}
 			else
 			{
-				ReturnToPreviousState();
+				Debug.Log("No previous state to return to... Something went wrong.");
+				SetState(GameState.InMainMenu);
 			}
 		}
-		else
-		{
-			Debug.Log($"Cannot set pause state when current game state = {CurrentState}");
-		}
-	}
 
-	static void ReturnToPreviousState()
-	{
-		if (Instance.stateStack.Count > 0)
+		public static void TogglePauseState()
 		{
-			Instance.stateStack.Pop();
-		}
-		else
-		{
-			Debug.Log("No previous state to return to... Something went wrong.");
-			SetState(GameState.InMainMenu);
-		}
-	}
-
-	public static void TogglePauseState()
-	{
-		bool pause = CurrentState == GameState.Playing;
-		SetPauseState(pause);
-	}
-
-	public static void StartGame()
-	{
-		SetState(GameState.Playing);
-		Instance.onGameStarted?.Invoke();
-	}
-
-	public static void SetState(GameState newState)
-	{
-		if (newState != CurrentState)
-		{
-			Instance.stateStack.Push(newState);
-		}
-	}
-
-	public static void ExitToMainMenu()
-	{
-		if (IsState(GameState.Paused))
-		{
-			SetPauseState(false);
-		}
-		SceneManager.LoadScene(0);
-	}
-
-	public static void Quit()
-	{
-		if (Application.isEditor)
-		{
-			ExitPlayMode();
-		}
-		else
-		{
-			Application.Quit();
+			bool pause = CurrentState == GameState.Playing;
+			SetPauseState(pause);
 		}
 
-	}
-
-	public static bool InDevMode
-	{
-		get
+		public static void StartGame()
 		{
-			return Application.isEditor || Instance.devModeEnabledInBuild;
+			SetState(GameState.Playing);
+			Instance.onGameStarted?.Invoke();
 		}
-	}
 
-	public static GameState CurrentState
-	{
-		get
+		public static void SetState(GameState newState)
 		{
-			return Instance.stateStack.Peek();
+			if (newState != CurrentState) 
+				Instance._stateStack.Push(newState);
 		}
-	}
 
-	public static bool IsState(GameState state)
-	{
-		return CurrentState == state;
-	}
-
-	public static bool IsAnyState(params GameState[] states)
-	{
-		foreach (var state in states)
+		public static void ExitToMainMenu()
 		{
-			if (CurrentState == state)
+			if (IsState(GameState.Paused))
 			{
-				return true;
+				SetPauseState(false);
 			}
+			SceneManager.LoadScene(0);
 		}
-		return false;
-	}
 
-	public static GameController Instance
-	{
-		get
+		public static void Quit()
 		{
-			if (_instance == null)
+			if (Application.isEditor)
 			{
-				_instance = FindObjectOfType<GameController>(includeInactive: true);
+				ExitPlayMode();
 			}
-			return _instance;
+			else
+			{
+				Application.Quit();
+			}
+
 		}
-	}
+
+		public static bool InDevMode
+		{
+			get
+			{
+				return Application.isEditor || Instance._devModeEnabledInBuild;
+			}
+		}
+
+		public static GameState CurrentState
+		{
+			get
+			{
+				return Instance._stateStack.Peek();
+			}
+		}
+
+		public static bool IsState(GameState state)
+		{
+			return CurrentState == state;
+		}
+
+		public static bool IsAnyState(params GameState[] states)
+		{
+			foreach (var state in states)
+			{
+				if (CurrentState == state)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public static GameController Instance
+		{
+			get
+			{
+				if (instance == null)
+				{
+					instance = FindObjectOfType<GameController>(includeInactive: true);
+				}
+				return instance;
+			}
+		}
 
 
-	static void ExitPlayMode()
-	{
+		static void ExitPlayMode()
+		{
 #if UNITY_EDITOR
-		UnityEditor.EditorApplication.isPlaying = false;
+			UnityEditor.EditorApplication.isPlaying = false;
 #endif
+		}
 	}
 }

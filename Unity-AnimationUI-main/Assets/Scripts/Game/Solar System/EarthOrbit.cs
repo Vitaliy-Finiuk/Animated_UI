@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace SolarSystem
+namespace Game.Solar_System
 {
 	public class EarthOrbit : MonoBehaviour
 	{

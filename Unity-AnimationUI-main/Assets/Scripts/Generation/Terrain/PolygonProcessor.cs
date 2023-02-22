@@ -1,8 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
+using Game.Misc;
+using Types;
 using UnityEngine;
 
-namespace TerrainGeneration
+namespace Generation.Terrain
 {
 	public class PolygonProcessor : MonoBehaviour
 	{
@@ -362,7 +363,7 @@ namespace TerrainGeneration
 		Coordinate[] GenerateExtraInnerPoints(Vector2[] polygon)
 		{
 
-			int[] triangles = TerrainGeneration.Triangulator.Triangulate(polygon, null, false);
+			int[] triangles = Triangulator.Triangulate(polygon, null, false);
 			int numTriangles = triangles.Length / 3;
 			Coordinate[] points = new Coordinate[numTriangles];
 

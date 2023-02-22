@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace TerrainGeneration
+namespace Generation.Terrain.Settings
 {
 	[CreateAssetMenu(menuName = "Terrain/Height Settings")]
 	public class TerrainHeightSettings : ScriptableObject

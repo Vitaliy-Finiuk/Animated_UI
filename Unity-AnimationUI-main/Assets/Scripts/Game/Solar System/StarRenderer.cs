@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
+using Editor_Helper;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace SolarSystem
+namespace Game.Solar_System
 {
 	public class StarRenderer : MonoBehaviour
 	{
 		public SolarSystemManager solarSystemManager;
 		public Shader starInstanceShader;
 		public Light sun;
-		//public Vector3 testParams;
 		public float size;
 		Material starMaterial;
 
@@ -25,8 +23,6 @@ namespace SolarSystem
 		public float appearTimeMax;
 
 		public StarData starData;
-
-
 
 		public void SetUpStarRenderingCommand(CommandBuffer cmd)
 		{
@@ -45,19 +41,14 @@ namespace SolarSystem
 
 				starDataBuffer = ComputeHelper.CreateStructuredBuffer(starData.Stars);
 
-
 				SetBuffer();
 
 				cmd.DrawMeshInstancedIndirect(quadMesh, 0, starMaterial, 0, argsBuffer, 0);
-
 			}
 		}
 
-		void SetBuffer()
-		{
+		private void SetBuffer() => 
 			starMaterial.SetBuffer("StarData", starDataBuffer);
-		}
-
 
 		public void UpdateFixedStars(EarthOrbit earth, bool geocentric)
 		{
@@ -73,16 +64,11 @@ namespace SolarSystem
 				}
 
 				starMaterial.SetMatrix("rotationMatrix", rotMatrix);
-
-
-				//bounds.center = cam.transform.position;
-				//Graphics.DrawMeshInstancedIndirect(quadMesh, 0, starMaterial, bounds, argsBuffer, castShadows: ShadowCastingMode.Off, receiveShadows: false);
-				//Graphics.DrawMeshInstanced(quadMesh, 0, starInstanceShader,)//
 			}
 		}
 
 
-		void CreateQuadMesh()
+		private void CreateQuadMesh()
 		{
 			quadMesh = new Mesh();
 
@@ -99,12 +85,10 @@ namespace SolarSystem
 			quadMesh.SetTriangles(triangles, 0, true);
 		}
 
-		void OnDestroy()
-		{
+		private void OnDestroy() => 
 			ComputeHelper.Release(argsBuffer, starDataBuffer);
-		}
 
-		void EditorOnlyInit()
+		private void EditorOnlyInit()
 		{
 #if UNITY_EDITOR
 			EditorShaderHelper.onRebindRequired += () => SetBuffer();

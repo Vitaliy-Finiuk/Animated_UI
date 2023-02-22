@@ -1,11 +1,14 @@
-using System.Collections.Generic;
 using System.Collections;
-using UnityEngine;
-using UnityEngine.Rendering;
-using Seb.Meshing;
+using System.Collections.Generic;
+using Game.Misc;
+using Generation.Outline_Raster;
+using Generation.Terrain.Settings;
 using Seb;
+using Seb.Meshing;
+using Types;
+using UnityEngine;
 
-namespace TerrainGeneration
+namespace Generation.Terrain
 {
 	public class OceanGenerator : Generator
 	{
@@ -18,7 +21,7 @@ namespace TerrainGeneration
 
 
 		[Header("References")]
-		public TerrainGeneration.TerrainHeightSettings heightSettings;
+		public TerrainHeightSettings heightSettings;
 		public ComputeShader oceanTileCompute;
 		public Material material;
 		public Texture2D landMask;
@@ -160,7 +163,7 @@ namespace TerrainGeneration
 			SortClockwise(edgePoints, edgePoints2D, space);
 
 			// Triangulate
-			int[] triangles = TerrainGeneration.Triangulator.Triangulate(edgePoints2D, points2D, reverseTriangleOrder);
+			int[] triangles = Triangulator.Triangulate(edgePoints2D, points2D, reverseTriangleOrder);
 
 
 			// Create vertex/height/normals arrays

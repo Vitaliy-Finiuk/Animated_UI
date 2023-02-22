@@ -1,90 +1,80 @@
 using UnityEngine;
 
-[System.Serializable]
-public struct Shape
+namespace Types
 {
-	public Polygon[] polygons;
-}
-
-[System.Serializable]
-public struct Polygon
-{
-	// First path is the outline of the polygon, any subsequent paths are holes to be cut out
-	public Path[] paths;
-
-	public Polygon(Path[] paths)
+	[System.Serializable]
+	public struct Shape
 	{
-		this.paths = paths;
+		public Polygon[] polygons;
 	}
 
-	public int NumHoles
+	[System.Serializable]
+	public struct Polygon
 	{
-		get
+		public Path[] paths;
+
+		public Polygon(Path[] paths)
 		{
-			return paths.Length - 1;
+			this.paths = paths;
 		}
-	}
 
-	public Path Outline
-	{
-		get
-		{
-			return paths[0];
-		}
-	}
+		public int NumHoles
+			=> paths.Length - 1;
 
-	public Path[] Holes
-	{
-		get
+		public Path Outline
+			=> paths[0];
+
+		public Path[] Holes
 		{
-			Path[] holes = new Path[NumHoles];
-			for (int i = 0; i < holes.Length; i++)
+			get
 			{
-				holes[i] = paths[i + 1];
+				Path[] holes = new Path[NumHoles];
+				for (int i = 0; i < holes.Length; i++)
+				{
+					holes[i] = paths[i + 1];
+				}
+				return holes;
 			}
-			return holes;
 		}
 	}
-}
 
-[System.Serializable]
-public struct Path
-{
-	public Coordinate[] points;
-
-	public Path(Coordinate[] points)
+	[System.Serializable]
+	public struct Path
 	{
-		this.points = points;
-	}
+		public Coordinate[] points;
 
-	public int NumPoints
-	{
-		get
+		public Path(Coordinate[] points)
 		{
-			return points.Length;
+			this.points = points;
 		}
-	}
 
-	// Convert coordinates to Vector2s.
-	// Optionally don't include last point (for cases where first and last points have been defined as the same)
-	public Vector2[] GetPointsAsVector2(bool includeLastPoint = true)
-	{
-		int numPoints = (includeLastPoint) ? points.Length : points.Length - 1;
-		Vector2[] pointsVec = new Vector2[numPoints];
-		for (int i = 0; i < numPoints; i++)
+		public int NumPoints
 		{
-			pointsVec[i] = points[i].ToVector2();
+			get
+			{
+				return points.Length;
+			}
 		}
-		return pointsVec;
-	}
 
-	public static Vector2[] GetPointsAsVector2(Coordinate[] coords)
-	{
-		Vector2[] pointsVec = new Vector2[coords.Length];
-		for (int i = 0; i < pointsVec.Length; i++)
+		public Vector2[] GetPointsAsVector2(bool includeLastPoint = true)
 		{
-			pointsVec[i] = coords[i].ToVector2();
+			int numPoints = (includeLastPoint) ? points.Length : points.Length - 1;
+			Vector2[] pointsVec = new Vector2[numPoints];
+			for (int i = 0; i < numPoints; i++)
+			{
+				pointsVec[i] = points[i].ToVector2();
+			}
+			return pointsVec;
 		}
-		return pointsVec;
+
+		public static Vector2[] GetPointsAsVector2(Coordinate[] coords)
+		{
+			Vector2[] pointsVec = new Vector2[coords.Length];
+			for (int i = 0; i < pointsVec.Length; i++)
+			{
+				pointsVec[i] = coords[i].ToVector2();
+			}
+			return pointsVec;
+		}
 	}
 }

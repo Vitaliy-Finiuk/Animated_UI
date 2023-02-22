@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using Game.Misc;
 using UnityEngine;
 
-namespace SolarSystem
+namespace Game.Solar_System
 {
 	[ExecuteInEditMode]
 	public class SolarSystemManager : MonoBehaviour
@@ -11,7 +10,6 @@ namespace SolarSystem
 		public bool animate;
 
 		[Header("Durations")]
-		// Allow flexible day/month/year durations since real timescales are a bit slow...
 		public float dayDurationMinutes;
 		public float monthDurationMinutes;
 		public float yearDurationMinutes;
@@ -32,23 +30,22 @@ namespace SolarSystem
 		public float yearT;
 
 
-		public float fastForwardDayDuration;
-		bool fastForwarding;
-		float oldPlayerT;
-		float fastForwardTargetTime;
-		bool fastForwardApproachingTargetTime;
+		private float _fastForwardDayDuration;
+		private bool _fastForwarding;
+		private float _oldPlayerT;
+		private float _fastForwardTargetTime;
+		private bool _fastForwardApproachingTargetTime;
 
 		[Header("Debug")]
 		public bool geocentric;
 
-
-		void Update()
+		private void Update()
 		{
 
 			if (animate && Application.isPlaying && GameController.IsState(GameState.Playing))
 			{
 				float daySpeed = 1 / (dayDurationMinutes * 60);
-				if (fastForwarding)
+				if (_fastForwarding)
 				{
 					HandleFastforwarding(out daySpeed);
 				}
@@ -71,10 +68,10 @@ namespace SolarSystem
 
 		public void FastForward(bool toDaytime)
 		{
-			fastForwardTargetTime = (toDaytime) ? 1 : -1;
-			fastForwarding = true;
-			fastForwardApproachingTargetTime = false;
-			oldPlayerT = CalculatePlayerDayT();
+			_fastForwardTargetTime = (toDaytime) ? 1 : -1;
+			_fastForwarding = true;
+			_fastForwardApproachingTargetTime = false;
+			_oldPlayerT = CalculatePlayerDayT();
 		}
 
 		public void SetTimes(float dayT, float monthT, float yearT)
@@ -85,37 +82,27 @@ namespace SolarSystem
 		}
 
 
-		void HandleFastforwarding(out float daySpeed)
+		private void HandleFastforwarding(out float daySpeed)
 		{
-			daySpeed = 1 / (fastForwardDayDuration * 60);
+			daySpeed = 1 / (_fastForwardDayDuration * 60);
 
 			float playerT = CalculatePlayerDayT();
-			if (DstToTargetTime(playerT, fastForwardTargetTime) < DstToTargetTime(oldPlayerT, fastForwardTargetTime))
+			if (DstToTargetTime(playerT, _fastForwardTargetTime) < DstToTargetTime(_oldPlayerT, _fastForwardTargetTime))
 			{
-				fastForwardApproachingTargetTime = true;
+				_fastForwardApproachingTargetTime = true;
 			}
-			else
-			{
-				if (fastForwardApproachingTargetTime)
-				{
-					fastForwarding = false;
-				}
-			}
-			oldPlayerT = playerT;
+			else 
+			if (_fastForwardApproachingTargetTime)
+				_fastForwarding = false;
+
+			_oldPlayerT = playerT;
 		}
 
-		// -1 at midnight to 1 at midday
-		float CalculatePlayerDayT()
-		{
-			return Vector3.Dot(player.position.normalized, -sun.transform.forward);
-		}
+		private float CalculatePlayerDayT() => 
+			Vector3.Dot(player.position.normalized, -sun.transform.forward);
 
-		// Value between -1 and +1. Can only move forward. Wraps around from +1 to -1.
-		float DstToTargetTime(float fromT, float targetT)
-		{
-			return Mathf.Abs(targetT - fromT);
-		}
-
+		private static float DstToTargetTime(float fromT, float targetT) => 
+			Mathf.Abs(targetT - fromT);
 	}
 
 

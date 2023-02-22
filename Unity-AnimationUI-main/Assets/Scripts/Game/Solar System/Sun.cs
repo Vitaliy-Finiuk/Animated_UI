@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace SolarSystem
+namespace Game.Solar_System
 {
 	[ExecuteInEditMode]
 	public class Sun : MonoBehaviour
@@ -19,20 +17,12 @@ namespace SolarSystem
 		public float timeOfDayT;
 		public int maxSize;
 
-		void Start()
+		private void Start()
 		{
 			lightSource = GetComponent<Light>();
 			cam = Camera.main;
 		}
 
-		void Update()
-		{
-			//lightSource.shadowCustomResolution = maxSize;
-		}
-
-
-		// For simplicity, earth is stationary and doesn't rotate.
-		// Instead the sun calculates the earth's spin and orbit, and positions itself relative to that
 		public void UpdateOrbit(EarthOrbit earth, bool geocentric)
 		{
 
@@ -50,14 +40,9 @@ namespace SolarSystem
 
 				UpdateColourApprox(earth.earthPos);
 			}
-
-
-
 		}
 
-		// Estimate sunlight colour based on angle from viewer to sun.
-		// Alternative would be reading data from atmosphere system, but that's on gpu so would rather avoid
-		void UpdateColourApprox(Vector3 earthPos)
+		private void UpdateColourApprox(Vector3 earthPos)
 		{
 
 			Vector3 dirToCam = (cam.transform.position - earthPos).normalized;
@@ -65,10 +50,8 @@ namespace SolarSystem
 			timeOfDayT = Mathf.Max(0, (Vector3.Dot(dirToCam, dirToSun) + dayStartOffset) / (1 + dayStartOffset));
 			sunColour = sunColGradient.Evaluate(timeOfDayT);
 
-			if (animateSunColour)
-			{
+			if (animateSunColour) 
 				lightSource.color = sunColour;
-			}
 		}
 	}
 }

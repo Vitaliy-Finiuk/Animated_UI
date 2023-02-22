@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TriangleNet.Geometry;
+using Types;
+using UnityEngine;
+using Polygon = Types.Polygon;
 
-namespace TerrainGeneration
+namespace Generation.Terrain
 {
 	public static class Triangulator
 	{

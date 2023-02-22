@@ -1,133 +1,133 @@
-using System.Collections;
 using System.Collections.Generic;
+using Game.City_Lights;
+using Game.Terrain_Lookup;
+using Generation.Terrain;
+using Generation.Terrain.Settings;
+using Menu;
 using UnityEngine;
-using TerrainGeneration;
 
-public class LoadingManager : MonoBehaviour
+namespace Game.World
 {
-
-	public bool logTaskLoadTimes;
-	public bool logTotalLoadTime;
-
-	[Header("References")]
-	public LoadScreen loadScreen;
-	public TerrainHeightSettings heightSettings;
-	public TerrainHeightProcessor heightProcessor;
-	public CityLights cityLights;
-	public WorldLookup worldLookup;
-	public Light sunLight;
-	public AtmosphereEffect atmosphereEffect;
-
-	public LodMeshLoader terrainLoader;
-	public MeshLoader oceanLoader;
-	public MeshLoader countryOutlineLoader;
-
-	public GameObject[] deactivateWhileLoading;
-
-	// Called before all other scripts (defined in script execution order settings)
-	void Awake()
+	public class LoadingManager : MonoBehaviour
 	{
-		Load();
 
-	}
+		public bool logTaskLoadTimes;
+		public bool logTotalLoadTime;
 
-	public LoadTask[] GetTasks()
-	{
-		List<LoadTask> tasks = new List<LoadTask>();
+		[Header("References")]
+		public LoadScreen loadScreen;
+		public TerrainHeightSettings heightSettings;
+		public TerrainHeightProcessor heightProcessor;
+		public CityLights cityLights;
+		public WorldLookup worldLookup;
+		public Light sunLight;
+		public AtmosphereEffect atmosphereEffect;
 
-		AddTask(() => heightProcessor.ProcessHeightMap(), "Processing Height Map");
-		AddTask(() => cityLights.Init(heightProcessor.processedHeightMap, sunLight), "Creating City Lights");
-		AddTask(() => worldLookup.Init(heightProcessor.processedHeightMap), "Initializing World Lookup");
-		AddTask(() => terrainLoader.Load(), "Loading Terrain Mesh");
-		AddTask(() => oceanLoader.Load(), "Loading Ocean Mesh");
-		AddTask(() => countryOutlineLoader.Load(), "Loading Country Outlines");
+		public LodMeshLoader terrainLoader;
+		public MeshLoader oceanLoader;
+		public MeshLoader countryOutlineLoader;
 
-		void AddTask(System.Action task, string name)
+		public GameObject[] deactivateWhileLoading;
+
+		private void Awake()
 		{
-			tasks.Add(new LoadTask(task, name));
+			Load();
 		}
 
-		return tasks.ToArray();
-	}
-
-
-
-	void Load()
-	{
-		var loadTimer = System.Diagnostics.Stopwatch.StartNew();
-		OnLoadStart();
-		LoadTask[] tasks = GetTasks();
-
-		foreach (LoadTask task in tasks)
+		public LoadTask[] GetTasks()
 		{
-			long taskTime = task.Execute(null, false);
-			if (logTaskLoadTimes)
+			List<LoadTask> tasks = new List<LoadTask>();
+
+			AddTask(() => heightProcessor.ProcessHeightMap(), "Processing Height Map");
+			AddTask(() => cityLights.Init(heightProcessor.processedHeightMap, sunLight), "Creating City Lights");
+			AddTask(() => worldLookup.Init(heightProcessor.processedHeightMap), "Initializing World Lookup");
+			AddTask(() => terrainLoader.Load(), "Loading Terrain Mesh");
+			AddTask(() => oceanLoader.Load(), "Loading Ocean Mesh");
+			AddTask(() => countryOutlineLoader.Load(), "Loading Country Outlines");
+
+			void AddTask(System.Action task, string name)
 			{
-				Debug.Log($"{task.taskName}: {taskTime} ms.");
+				tasks.Add(new LoadTask(task, name));
+			}
+
+			return tasks.ToArray();
+		}
+
+
+		private void Load()
+		{
+			var loadTimer = System.Diagnostics.Stopwatch.StartNew();
+			OnLoadStart();
+			LoadTask[] tasks = GetTasks();
+
+			foreach (LoadTask task in tasks)
+			{
+				long taskTime = task.Execute(null, false);
+				if (logTaskLoadTimes)
+				{
+					Debug.Log($"{task.taskName}: {taskTime} ms.");
+				}
+			}
+
+			OnLoadFinish();
+			if (logTotalLoadTime)
+			{
+				Debug.Log($"Total load duration: {loadTimer.ElapsedMilliseconds} ms.");
 			}
 		}
 
-		OnLoadFinish();
-		if (logTotalLoadTime)
+
+		private void OnLoadStart()
 		{
-			Debug.Log($"Total load duration: {loadTimer.ElapsedMilliseconds} ms.");
-		}
-	}
-
-
-
-	void OnLoadStart()
-	{
-		SetActiveStateAll(deactivateWhileLoading, false);
-		loadScreen.gameObject.SetActive(true);
-		loadScreen.Init();
-	}
-
-	void OnLoadFinish()
-	{
-		// Release any memory from stuff no longer needed after all generation is finished
-		heightProcessor.Release();
-		Resources.UnloadUnusedAssets(); // not sure if any good reason to do this (?)
-
-		// Start game
-		SetActiveStateAll(deactivateWhileLoading, true);
-		loadScreen.Close();
-	}
-
-	public class LoadTask
-	{
-		public System.Action task;
-		public string taskName;
-
-		public LoadTask(System.Action task, string name)
-		{
-			this.task = task;
-			this.taskName = name;
+			SetActiveStateAll(deactivateWhileLoading, false);
+			loadScreen.gameObject.SetActive(true);
+			loadScreen.Init();
 		}
 
-		public long Execute(LoadScreen loadScreen, bool log)
+		private void OnLoadFinish()
 		{
-			if (log)
+			// Release any memory from stuff no longer needed after all generation is finished
+			heightProcessor.Release();
+			Resources.UnloadUnusedAssets(); // not sure if any good reason to do this (?)
+
+			// Start game
+			SetActiveStateAll(deactivateWhileLoading, true);
+			loadScreen.Close();
+		}
+
+		public class LoadTask
+		{
+			public System.Action task;
+			public string taskName;
+
+			public LoadTask(System.Action task, string name)
 			{
-				loadScreen.Log(taskName, newLine: true);
+				this.task = task;
+				this.taskName = name;
 			}
-			var sw = System.Diagnostics.Stopwatch.StartNew();
-			task.Invoke();
 
-			if (log)
+			public long Execute(LoadScreen loadScreen, bool log)
 			{
-				loadScreen.Log($" {sw.ElapsedMilliseconds}ms.", newLine: false);
+				if (log)
+				{
+					loadScreen.Log(taskName, newLine: true);
+				}
+				var sw = System.Diagnostics.Stopwatch.StartNew();
+				task.Invoke();
+
+				if (log)
+				{
+					loadScreen.Log($" {sw.ElapsedMilliseconds}ms.", newLine: false);
+				}
+				return sw.ElapsedMilliseconds;
 			}
-			return sw.ElapsedMilliseconds;
 		}
-	}
 
-	void SetActiveStateAll(GameObject[] gameObjects, bool isActive)
-	{
-		foreach (var g in gameObjects)
+		static void SetActiveStateAll(GameObject[] gameObjects, bool isActive)
 		{
-			g.SetActive(isActive);
+			foreach (var g in gameObjects) 
+				g.SetActive(isActive);
 		}
-	}
 
+	}
 }

@@ -1,29 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
-[CustomEditor(typeof(TileCaptureTest))]
-public class TileCaptureEditor : Editor
+namespace Generation.Tile_Capture.Editor
 {
-	public override void OnInspectorGUI()
+	[CustomEditor(typeof(TileCaptureTest))]
+	public class TileCaptureEditor : UnityEditor.Editor
 	{
-		base.OnInspectorGUI();
-
-		TileCaptureTest capture = target as TileCaptureTest;
-
-		using (new EditorGUI.DisabledScope(!Application.isPlaying))
+		public override void OnInspectorGUI()
 		{
-			if (!Application.isPlaying)
+			base.OnInspectorGUI();
+
+			TileCaptureTest capture = target as TileCaptureTest;
+
+			using (new EditorGUI.DisabledScope(!Application.isPlaying))
 			{
-				GUILayout.Box("Must be in play mode to capture");
-			}
-			if (GUILayout.Button("Capture tiles 4x2"))
-			{
-				capture.StartCapture4x2();
+				if (!Application.isPlaying)
+				{
+					GUILayout.Box("Must be in play mode to capture");
+				}
+				if (GUILayout.Button("Capture tiles 4x2"))
+				{
+					capture.StartCapture4x2();
+				}
+
 			}
 
 		}
-
 	}
 }

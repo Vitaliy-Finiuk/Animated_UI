@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
-namespace TerrainGeneration.CustomEditors
+namespace Generation.Terrain.Editor
 {
 	[CustomEditor(typeof(Generator), editorForChildClasses: true)]
-	public class GeneratorEditor : Editor
+	public class GeneratorEditor : UnityEditor.Editor
 	{
 		public override void OnInspectorGUI()
 		{

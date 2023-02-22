@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using Game.Misc;
+using Generation.Outline_Raster;
+using Generation.Terrain.Settings;
 using Seb.Meshing;
+using Types;
+using UnityEngine;
 
-namespace TerrainGeneration
+namespace Generation.Terrain
 {
 	public class TerrainGenerator : Generator
 	{
@@ -31,7 +35,7 @@ namespace TerrainGeneration
 		public Material testMat;
 		public PolygonProcessor polygonProcessor;
 		public Coastline coastline;
-		public TerrainGeneration.TerrainHeightSettings heightSettings;
+		public TerrainHeightSettings heightSettings;
 		public Transform meshHolder;
 
 
@@ -42,7 +46,7 @@ namespace TerrainGeneration
 
 		Country[] countries;
 
-		public TerrainGeneration.TerrainHeightProcessor heightProcessor;
+		public TerrainHeightProcessor heightProcessor;
 
 		[Header("Debug info")]
 		[Disabled] public int totalVertexCount;
@@ -201,7 +205,7 @@ namespace TerrainGeneration
 			}
 
 			// ---- Triangulate ----
-			int[] triangles = TerrainGeneration.Triangulator.Triangulate(processedPolygon.reprojectedOutline, processedPolygon.reprojectedInnerPoints, processedPolygon.reprojectedHoles);
+			int[] triangles = Triangulator.Triangulate(processedPolygon.reprojectedOutline, processedPolygon.reprojectedInnerPoints, processedPolygon.reprojectedHoles);
 
 			// Assign heights to vertices:
 			// At this stage, vertices are all points on unit sphere.

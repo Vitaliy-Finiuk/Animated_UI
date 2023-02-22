@@ -1,75 +1,66 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-[ExecuteInEditMode]
-public class RenderingManager : MonoBehaviour
+namespace Game.Solar_System
 {
-
-	public SolarSystem.StarRenderer starRenderer;
-	public AtmosphereEffect atmosphereEffect;
-
-	bool atmosphereActive;
-	CommandBuffer outerSpaceRenderCommand;
-	CommandBuffer skyRenderCommand;
-	Camera cam;
-
-	public Mesh mesh;
-	public Material mat;
-	public SolarSystem.Moon moon;
-
-	void OnEnable()
+	[ExecuteInEditMode]
+	public class RenderingManager : MonoBehaviour
 	{
-		Setup();
-	}
 
-	void Setup()
-	{
-		cam = Camera.main;
-		cam.RemoveAllCommandBuffers();
+		public StarRenderer starRenderer;
+		public AtmosphereEffect atmosphereEffect;
 
-		outerSpaceRenderCommand = new CommandBuffer();
-		outerSpaceRenderCommand.name = "Outer Space Render";
+		private bool _atmosphereActive;
+		private CommandBuffer _outerSpaceRenderCommand;
+		private CommandBuffer _skyRenderCommand;
+		private Camera _cam;
 
+		public Mesh mesh;
+		public Material mat;
+		public Moon moon;
 
-		starRenderer?.SetUpStarRenderingCommand(outerSpaceRenderCommand);
-		moon?.Setup(outerSpaceRenderCommand);
-		cam.AddCommandBuffer(CameraEvent.BeforeForwardOpaque, outerSpaceRenderCommand);
+		private void OnEnable() => 
+			Setup();
 
-		// Atmosphere
-		skyRenderCommand = new CommandBuffer();
-		skyRenderCommand.name = "Sky Render";
-		atmosphereEffect.SetupSkyRenderingCommand(skyRenderCommand);
-
-		atmosphereActive = atmosphereEffect.enabled;
-		if (atmosphereActive)
+		private void Setup()
 		{
-			cam.AddCommandBuffer(CameraEvent.BeforeForwardOpaque, skyRenderCommand);
+			_cam = Camera.main;
+			_cam.RemoveAllCommandBuffers();
+
+			_outerSpaceRenderCommand = new CommandBuffer();
+			_outerSpaceRenderCommand.name = "Outer Space Render";
+
+
+			starRenderer?.SetUpStarRenderingCommand(_outerSpaceRenderCommand);
+			moon?.Setup(_outerSpaceRenderCommand);
+			_cam.AddCommandBuffer(CameraEvent.BeforeForwardOpaque, _outerSpaceRenderCommand);
+
+			_skyRenderCommand = new CommandBuffer();
+			_skyRenderCommand.name = "Sky Render";
+			atmosphereEffect.SetupSkyRenderingCommand(_skyRenderCommand);
+
+			_atmosphereActive = atmosphereEffect.enabled;
+			if (_atmosphereActive) 
+				_cam.AddCommandBuffer(CameraEvent.BeforeForwardOpaque, _skyRenderCommand);
 		}
-	}
 
-	void Update()
-	{
-		//Graphics.DrawMesh(mesh, Matrix4x4.TRS(new Vector3(70, 134, -80), Quaternion.identity, Vector3.one * 30), mat, 0);
-		if (atmosphereEffect.enabled != atmosphereActive)
+		private void Update()
 		{
-			atmosphereActive = atmosphereEffect.enabled;
-			if (atmosphereActive)
+			if (atmosphereEffect.enabled != _atmosphereActive)
 			{
-				cam.AddCommandBuffer(CameraEvent.BeforeForwardOpaque, skyRenderCommand);
-			}
-			else
-			{
-				cam.RemoveCommandBuffer(CameraEvent.BeforeForwardOpaque, skyRenderCommand);
+				_atmosphereActive = atmosphereEffect.enabled;
+				if (_atmosphereActive)
+					_cam.AddCommandBuffer(CameraEvent.BeforeForwardOpaque, _skyRenderCommand);
+				else
+					_cam.RemoveCommandBuffer(CameraEvent.BeforeForwardOpaque, _skyRenderCommand);
 			}
 		}
-	}
 
-	void OnDisable()
-	{
-		skyRenderCommand?.Release();
-		outerSpaceRenderCommand?.Release();
-	}
+		private void OnDisable()
+		{
+			_skyRenderCommand?.Release();
+			_outerSpaceRenderCommand?.Release();
+		}
 
+	}
 }

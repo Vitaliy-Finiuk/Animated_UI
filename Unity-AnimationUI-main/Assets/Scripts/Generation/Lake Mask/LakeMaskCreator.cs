@@ -1,25 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
+using Generation.Marine;
+using Generation.Terrain;
 using UnityEngine;
 
-public class LakeMaskCreator : MonoBehaviour
+namespace Generation.Lake_Mask
 {
-
-	public TextAsset lakeFile;
-
-	void Start()
+	public class LakeMaskCreator : MonoBehaviour
 	{
-		var polygons = MarineLoad.ReadPolygons(lakeFile.text);
 
-		foreach (var p in polygons)
+		public TextAsset lakeFile;
+
+		void Start()
 		{
-			Vector2[] points = p.Outline.GetPointsAsVector2(false);
-			int[] tris = TerrainGeneration.Triangulator.Triangulate(points, null);
+			var polygons = MarineLoad.ReadPolygons(lakeFile.text);
 
-			Vector3[] verts = Seb.VectorHelper.To3DArray(points);
-			var meshData = new Seb.Meshing.SimpleMeshData(verts, tris);
-			Seb.Meshing.MeshHelper.CreateRendererObject("Lake", meshData);
+			foreach (var p in polygons)
+			{
+				Vector2[] points = p.Outline.GetPointsAsVector2(false);
+				int[] tris = Triangulator.Triangulate(points, null);
+
+				Vector3[] verts = Seb.VectorHelper.To3DArray(points);
+				var meshData = new Seb.Meshing.SimpleMeshData(verts, tris);
+				Seb.Meshing.MeshHelper.CreateRendererObject("Lake", meshData);
+			}
 		}
-	}
 
+	}
 }

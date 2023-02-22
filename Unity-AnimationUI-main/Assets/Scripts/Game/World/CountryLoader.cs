@@ -1,108 +1,108 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-public class CountryLoader : MonoBehaviour
+using Types;
+using UnityEngine;
+
+namespace Game.World
 {
-	public bool autoRunOnAwake = true;
-	public TextAsset countryFile;
-	public TextAsset cityFile;
-	public TextAsset capitalsFile;
-
-	[SerializeField] Country[] countries;
-	bool loaded;
-
-	[ContextMenu("Run")]
-	void Awake()
+	public class CountryLoader : MonoBehaviour
 	{
-		if (autoRunOnAwake)
+		public bool autoRunOnAwake = true;
+		public TextAsset countryFile;
+		public TextAsset cityFile;
+		public TextAsset capitalsFile;
+
+		[SerializeField] Country[] countries;
+		private bool _loaded;
+
+		[ContextMenu("Run")]
+		private void Awake()
+		{
+			if (autoRunOnAwake) 
+				Load();
+		}
+
+		public Country[] GetCountries()
 		{
 			Load();
+			return countries;
 		}
-	}
 
-	public Country[] GetCountries()
-	{
-		Load();
-		return countries;
-	}
-
-	public int NumCountries
-	{
-		get
+		public int NumCountries
 		{
-			Load();
-			return countries.Length;
-		}
-	}
-
-	public void Load()
-	{
-		if (!loaded || !Application.isPlaying)
-		{
-			if (countryFile != null)
+			get
 			{
-				CountryReader countryReader = new CountryReader();
-				countries = countryReader.ReadCountries(countryFile);
+				Load();
+				return countries.Length;
 			}
-
-			if (cityFile != null)
-			{
-				CityReader cityReader = new CityReader();
-				City[] allCities = cityReader.ReadCities(cityFile, capitalsFile);
-				AddCitiesToCountries(allCities);
-			}
-			loaded = true;
 		}
-	}
 
-	void AddCitiesToCountries(City[] allCities)
-	{
-		// Can happen due to mismatching country codes in files
-		int numCountriesWithoutCity = 0;
-		int numCitiesWithoutCountry = 0;
-
-		HashSet<string> legitateCountryCodes = new HashSet<string>(countries.Select(x => x.alpha3Code));
-
-		var citiesByCountry = new Dictionary<string, List<City>>();
-
-		foreach (City city in allCities)
+		public void Load()
 		{
-			string countryCode = city.countryAlpha3Code;
-			if (legitateCountryCodes.Contains(countryCode))
+			if (!_loaded || !Application.isPlaying)
 			{
-
-				if (!citiesByCountry.ContainsKey(countryCode))
+				if (countryFile != null)
 				{
-					citiesByCountry.Add(countryCode, new List<City>());
+					CountryReader countryReader = new CountryReader();
+					countries = countryReader.ReadCountries(countryFile);
 				}
-				citiesByCountry[countryCode].Add(city);
-			}
-			else
-			{
-				numCitiesWithoutCountry++;
+
+				if (cityFile != null)
+				{
+					CityReader cityReader = new CityReader();
+					City[] allCities = cityReader.ReadCities(cityFile, capitalsFile);
+					AddCitiesToCountries(allCities);
+				}
+				_loaded = true;
 			}
 		}
 
-
-		foreach (Country country in countries)
+		private void AddCitiesToCountries(City[] allCities)
 		{
-			List<City> citiesInCountry = new List<City>();
-			if (citiesByCountry.TryGetValue(country.alpha3Code, out citiesInCountry))
+			int numCountriesWithoutCity = 0;
+			int numCitiesWithoutCountry = 0;
+
+			HashSet<string> legitateCountryCodes = new HashSet<string>(countries.Select(x => x.alpha3Code));
+
+			var citiesByCountry = new Dictionary<string, List<City>>();
+
+			foreach (City city in allCities)
 			{
-				country.cities = citiesInCountry.ToArray();
+				string countryCode = city.countryAlpha3Code;
+				if (legitateCountryCodes.Contains(countryCode))
+				{
+
+					if (!citiesByCountry.ContainsKey(countryCode))
+					{
+						citiesByCountry.Add(countryCode, new List<City>());
+					}
+					citiesByCountry[countryCode].Add(city);
+				}
+				else
+				{
+					numCitiesWithoutCountry++;
+				}
 			}
-			else
+
+
+			foreach (Country country in countries)
 			{
-				country.cities = new City[0];
-				numCountriesWithoutCity++;
+				List<City> citiesInCountry = new List<City>();
+				if (citiesByCountry.TryGetValue(country.alpha3Code, out citiesInCountry))
+				{
+					country.cities = citiesInCountry.ToArray();
+				}
+				else
+				{
+					country.cities = new City[0];
+					numCountriesWithoutCity++;
+				}
 			}
+
+			//Debug.Log("Num countries without a city: " + numCountriesWithoutCity + " Num cities without a country: " + numCitiesWithoutCountry);
 		}
 
-		//Debug.Log("Num countries without a city: " + numCountriesWithoutCity + " Num cities without a country: " + numCitiesWithoutCountry);
-	}
-
-	/*
+		/*
 	[ContextMenu("Create Country Info Template")]
 	void CreateCountryInfoJsonTemplate()
 	{
@@ -125,4 +125,5 @@ public class CountryLoader : MonoBehaviour
 		Debug.Log("Template file saved to Assets folder");
 	}
 	*/
+	}
 }

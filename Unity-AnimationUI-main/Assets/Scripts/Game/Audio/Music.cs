@@ -1,66 +1,61 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Music : MonoBehaviour
+namespace Game.Audio
 {
-
-	public AudioClip[] tracks;
-	public AudioSource source;
-	public bool shuffleTracksOnStart;
-	int[] playOrder;
-	int nextTrackIndex;
-	float nextTrackStartTime;
-
-	static Music instance;
-
-
-	void Awake()
+	public class Music : MonoBehaviour
 	{
-		if (instance == null)
-		{
-			instance = this;
-			DontDestroyOnLoad(gameObject);
-			Init();
-		}
-		// Force single instance
-		else
-		{
-			Destroy(gameObject);
-		}
-	}
+
+		public AudioClip[] tracks;
+		public AudioSource source;
+		public bool shuffleTracksOnStart;
+		private int[] _playOrder;
+		private int _nextTrackIndex;
+		private float _nextTrackStartTime;
+
+		private static Music instance;
 
 
-	void Init()
-	{
-		playOrder = Seb.ArrayHelper.CreateIndexArray(tracks.Length);
-		if (shuffleTracksOnStart)
+		private void Awake()
 		{
-			Seb.ArrayHelper.ShuffleArray(playOrder, new System.Random());
-		}
-		nextTrackIndex = 0;
-	}
-
-	void Update()
-	{
-		if (Time.time > nextTrackStartTime)
-		{
-			if (tracks[nextTrackIndex] != null)
+			if (instance == null)
 			{
-				source.Stop();
-				source.clip = tracks[nextTrackIndex];
-				source.Play();
-				nextTrackStartTime = Time.time + source.clip.length;
-				nextTrackIndex = (nextTrackIndex + 1) % tracks.Length;
+				instance = this;
+				DontDestroyOnLoad(gameObject);
+				Init();
+			}
+			else
+				Destroy(gameObject);
+		}
+
+
+		private void Init()
+		{
+			_playOrder = Seb.ArrayHelper.CreateIndexArray(tracks.Length);
+			if (shuffleTracksOnStart) 
+				Seb.ArrayHelper.ShuffleArray(_playOrder, new System.Random());
+			
+			_nextTrackIndex = 0;
+		}
+
+		private void Update()
+		{
+			if (Time.time > _nextTrackStartTime)
+			{
+				if (tracks[_nextTrackIndex] != null)
+				{
+					source.Stop();
+					source.clip = tracks[_nextTrackIndex];
+					source.Play();
+					_nextTrackStartTime = Time.time + source.clip.length;
+					_nextTrackIndex = (_nextTrackIndex + 1) % tracks.Length;
+				}
 			}
 		}
-	}
 
-	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-	static void ResetStaticValues()
-	{
-		// Handle if domain reloading is disabled in player settings
-		instance = null;
+		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+		private static void ResetStaticValues()
+		{
+			instance = null;
+		}
 	}
-
 }

@@ -1,7 +1,8 @@
+using Generation.Terrain.Settings;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
-namespace TerrainGeneration
+namespace Generation.Terrain
 {
 	public class TerrainHeightProcessor : MonoBehaviour
 	{

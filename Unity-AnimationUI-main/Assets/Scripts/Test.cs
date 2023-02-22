@@ -13,84 +13,65 @@ public class Test : MonoBehaviour
     public float maxRotationDistance = 10f;
     public float sensitivity = 1f;
 
-    private float currentDistance;
-    private float mouseX, mouseY;
-    private bool followCursor = false;
+    private float _currentDistance;
+    private float _mouseX, _mouseY;
+    private bool _followCursor = false;
 
-    private void Start()
-    {
-        currentDistance = distance;
-    }
+    private void Start() => 
+        _currentDistance = distance;
 
     private void LateUpdate()
     {
         if (target != null)
         {
-            // Calculate distance to target
             float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
-            // Zoom with mouse wheel
             float scrollWheelInput = Input.GetAxis("Mouse ScrollWheel");
             if (scrollWheelInput != 0f)
             {
-                currentDistance -= scrollWheelInput * zoomSpeed;
-                currentDistance = Mathf.Clamp(currentDistance, minDistance, maxDistance);
+                _currentDistance -= scrollWheelInput * zoomSpeed;
+                _currentDistance = Mathf.Clamp(_currentDistance, minDistance, maxDistance);
             }
 
-            // Rotate with mouse
-            if (distanceToTarget > maxRotationDistance || followCursor)
+            if (distanceToTarget > maxRotationDistance || _followCursor)
             {
                 if (Input.GetMouseButton(0))
                 {
-                    if (!followCursor)
+                    if (!_followCursor)
                     {
-                        mouseX += Input.GetAxis("Mouse X") * rotationSpeed * currentDistance * Time.deltaTime * sensitivity;
-                        mouseY -= Input.GetAxis("Mouse Y") * rotationSpeed * currentDistance * Time.deltaTime * sensitivity;
-                        mouseY = Mathf.Clamp(mouseY, -90f, 90f);
+                        _mouseX += Input.GetAxis("Mouse X") * rotationSpeed * _currentDistance * Time.deltaTime * sensitivity;
+                        _mouseY -= Input.GetAxis("Mouse Y") * rotationSpeed * _currentDistance * Time.deltaTime * sensitivity;
+                        _mouseY = Mathf.Clamp(_mouseY, -90f, 90f);
                     }
                     else
                     {
-                        // Follow cursor
                         Vector3 mousePosition = Input.mousePosition;
-                        mouseX += (mousePosition.x - Screen.width / 2f) * rotationSpeed * Time.deltaTime * sensitivity;
-                        mouseY -= (mousePosition.y - Screen.height / 2f) * rotationSpeed * Time.deltaTime * sensitivity;
-                        mouseY = Mathf.Clamp(mouseY, -90f, 90f);
+                        _mouseX += (mousePosition.x - Screen.width / 2f) * rotationSpeed * Time.deltaTime * sensitivity;
+                        _mouseY -= (mousePosition.y - Screen.height / 2f) * rotationSpeed * Time.deltaTime * sensitivity;
+                        _mouseY = Mathf.Clamp(_mouseY, -90f, 90f);
                     }
                 }
             }
 
-            // Calculate new camera position
-            Quaternion rotation = Quaternion.Euler(mouseY, mouseX, 0f);
+            Quaternion rotation = Quaternion.Euler(_mouseY, _mouseX, 0f);
             Vector3 position;
 
-            if (followCursor)
+            if (_followCursor)
             {
-                // Follow cursor
                 Vector3 mousePosition = Input.mousePosition;
-                mousePosition.z = currentDistance;
+                mousePosition.z = _currentDistance;
                 position = Camera.main.ScreenToWorldPoint(mousePosition);
             }
             else
-            {
-                // Follow target
-                position = rotation * new Vector3(0f, 0f, -currentDistance) + target.position;
-            }
+                position = rotation * new Vector3(0f, 0f, -_currentDistance) + target.position;
 
-            // Apply new position and rotation to camera
             transform.rotation = rotation;
             transform.position = position;
 
-            // Check if within radius and right mouse button pressed
             if (distanceToTarget <= maxRotationDistance && Input.GetMouseButton(0))
-            {
-                // Follow cursor
-                followCursor = true;
-            }
+                _followCursor = true;
             else
-            {
-                // Reset follow cursor
-                followCursor = false;
-            }
+                _followCursor = false;
         }
     }
 }

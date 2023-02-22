@@ -1,8 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
+using Game.Misc;
+using Types;
 using UnityEngine;
 
-namespace SolarSystem
+namespace Game.Solar_System
 {
 	[CreateAssetMenu(menuName = "Data/Star Data")]
 	public class StarData : ScriptableObject
@@ -16,20 +17,10 @@ namespace SolarSystem
 		[SerializeField] Star[] stars;
 
 		public int NumStars
-		{
-			get
-			{
-				return stars.Length;
-			}
-		}
+			=> stars.Length;
 
 		public Star[] Stars
-		{
-			get
-			{
-				return stars;
-			}
-		}
+			=> stars;
 
 		public void CreateStarData()
 		{
@@ -41,8 +32,8 @@ namespace SolarSystem
 			using (System.IO.StringReader reader = new System.IO.StringReader(starFile.text))
 			{
 				string header = reader.ReadLine();
-				string sol = reader.ReadLine(); // skip the sun since this is handled differently
-
+				string sol = reader.ReadLine(); 
+				
 				while (true)
 				{
 					string line = reader.ReadLine();
@@ -56,9 +47,7 @@ namespace SolarSystem
 					float magnitude = float.Parse(values[13]);
 
 
-					// Corresponds to longitude. Measured in hours [0, 24)
 					float rightAscension = float.Parse(values[7]);
-					// Corresponds to latitude. Measured in degrees [-90, 90]
 					float declination = float.Parse(values[8]);
 
 					if (magnitude <= magnitudeThreshold)
@@ -84,8 +73,6 @@ namespace SolarSystem
 				}
 			}
 
-			// Scale magnitude between 0 and 1
-			// (with 1 being brightest, i.e the one with the lowest magnitude since lower is brighter for whatever reason!)
 			for (int i = 0; i < starList.Count; i++)
 			{
 				Star star = starList[i];

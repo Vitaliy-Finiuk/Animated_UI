@@ -1,24 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
-namespace SolarSystem.CustomEditors
+namespace Game.Solar_System.Editor
 {
 	[CustomEditor(typeof(StarData))]
-	public class StarDataEditor : Editor
+	public class StarDataEditor : UnityEditor.Editor
 	{
-
 		public override void OnInspectorGUI()
 		{
 			base.OnInspectorGUI();
 			StarData starData = target as StarData;
 
-			if (GUILayout.Button("Generate"))
-			{
+			if (GUILayout.Button("Generate")) 
 				starData.CreateStarData();
-			}
-
 		}
 	}
 }

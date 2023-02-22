@@ -1,23 +1,23 @@
 using UnityEngine;
 
-public class CountryIndexDisplay : MonoBehaviour
+namespace Generation.Country_Index
 {
-	public FilterMode filterMode;
-	public MeshRenderer display;
-	public int textureWidth;
-	RenderTexture texture;
-
-
-	void Start()
+	public class CountryIndexDisplay : MonoBehaviour
 	{
-		texture = FindObjectOfType<CountryIndexMapper>().CreateCountryIndexMap(textureWidth, textureWidth / 2);
-		texture.filterMode = filterMode;
-		display.material.mainTexture = texture;
-	}
+		public FilterMode filterMode;
+		public MeshRenderer display;
+		public int textureWidth;
+		private RenderTexture _texture;
 
-	void OnDestroy()
-	{
-		ComputeHelper.Release(texture);
-	}
 
+		private void Start()
+		{
+			_texture = FindObjectOfType<CountryIndexMapper>().CreateCountryIndexMap(textureWidth, textureWidth / 2);
+			_texture.filterMode = filterMode;
+			display.material.mainTexture = _texture;
+		}
+
+		private void OnDestroy() => 
+			ComputeHelper.Release(_texture);
+	}
 }
