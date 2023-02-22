@@ -12,7 +12,6 @@ namespace NaughtyAttributes.Editor
         {
             if (target == null)
             {
-                Debug.LogError("The target object is null. Check for missing scripts.");
                 yield break;
             }
 

@@ -28,35 +28,9 @@ public class RenderSettingsController : MonoBehaviour
 		ApplySettings();
 	}
 
-	public static void SetTerrainQuality(Settings.TerrainQuality terrainQuality)
-	{
-		if (terrainQuality == Settings.TerrainQuality.High)
-		{
-			Instance.lodSystem.mode = SimpleLodSystem.Mode.Auto;
-		}
-		else if (terrainQuality == Settings.TerrainQuality.Low)
-		{
-			Instance.lodSystem.mode = SimpleLodSystem.Mode.ForceLowRes;
-		}
-	}
 
-	public static void SetShadowQuality(Settings.ShadowQuality quality)
-	{
-		switch (quality)
-		{
-			case Settings.ShadowQuality.High:
-				Instance.mainLight.shadows = LightShadows.Soft;
-				Instance.mainLight.shadowResolution = UnityEngine.Rendering.LightShadowResolution.VeryHigh;
-				break;
-			case Settings.ShadowQuality.Low:
-				Instance.mainLight.shadows = LightShadows.Soft;
-				Instance.mainLight.shadowResolution = UnityEngine.Rendering.LightShadowResolution.Medium;
-				break;
-			case Settings.ShadowQuality.Disabled:
-				Instance.mainLight.shadows = LightShadows.None;
-				break;
-		}
-	}
+
+
 
 	void ApplySettings()
 	{

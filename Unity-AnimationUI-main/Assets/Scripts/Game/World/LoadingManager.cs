@@ -17,7 +17,6 @@ public class LoadingManager : MonoBehaviour
 	public WorldLookup worldLookup;
 	public Light sunLight;
 	public AtmosphereEffect atmosphereEffect;
-	public GlobeMapLoader globeMapLoader;
 
 	public LodMeshLoader terrainLoader;
 	public MeshLoader oceanLoader;
@@ -39,7 +38,6 @@ public class LoadingManager : MonoBehaviour
 		AddTask(() => heightProcessor.ProcessHeightMap(), "Processing Height Map");
 		AddTask(() => cityLights.Init(heightProcessor.processedHeightMap, sunLight), "Creating City Lights");
 		AddTask(() => worldLookup.Init(heightProcessor.processedHeightMap), "Initializing World Lookup");
-		AddTask(() => globeMapLoader.Load(), "Loading Globe (map)");
 		AddTask(() => terrainLoader.Load(), "Loading Terrain Mesh");
 		AddTask(() => oceanLoader.Load(), "Loading Ocean Mesh");
 		AddTask(() => countryOutlineLoader.Load(), "Loading Country Outlines");

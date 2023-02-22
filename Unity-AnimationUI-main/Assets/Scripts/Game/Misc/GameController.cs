@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,8 +18,6 @@ public class GameController : MonoBehaviour
 	// Inspector variables
 	[SerializeField] GameState startupState;
 	[SerializeField] bool allowDevModeToggleInBuild;
-	[SerializeField] MainMenu mainMenu;
-	[SerializeField] Menu statsMenu;
 
 	[Header("Debug")]
 	[SerializeField] GameState debug_currentState;
@@ -40,11 +37,7 @@ public class GameController : MonoBehaviour
 
 	void Start()
 	{
-		if (IsState(GameState.InMainMenu))
-		{
-			mainMenu.OpenMenu();
-		}
-		else if (IsState(GameState.Playing))
+ if (IsState(GameState.Playing))
 		{
 			StartGame();
 		}
@@ -52,10 +45,6 @@ public class GameController : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyBindings.ToggleDevMode) && allowDevModeToggleInBuild)
-		{
-			devModeEnabledInBuild = !devModeEnabledInBuild;
-		}
 
 		debug_currentState = stateStack.Peek();
 
@@ -67,7 +56,6 @@ public class GameController : MonoBehaviour
 		{
 			Time.timeScale = 0;
 			SetState(GameState.GameOver);
-			Instance.statsMenu.OpenMenu();
 		}
 	}
 
